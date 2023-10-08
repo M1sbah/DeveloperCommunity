@@ -1,0 +1,66 @@
+<div class="col-lg-10 mx-auto mt-5">
+    <% if @requested_connections.present? %>
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Requested Connections</h3>
+            </div>
+            <div class="card-body text-center">
+                <div class="row">
+                    <% @requested_connections.each do |connection| %>
+                        <div class="col-lg-3 ">
+                            <div class="card mt-3" style="min-height:360px">
+                                <div class="card-body">
+                                    <%= image_tag  'dummy', class:"img-fluid mb-1 "%>
+                                    <div style="min-height:100px;">
+                                        <%= link_to member_path(connection.requested), style: "text-decoration:none;" do %>
+                                        <p class="lead fw-bold"><%= connection.requested.fullname%></p>
+                                        <small class="text-muted"><%= connection.requested.profile_title%></small>
+                                        <% end %>
+                                    </div>
+                                    
+                                     <%= render 'connections/update', connection: connection%>
+                                </div>
+                            </div>
+                        </div>
+                    <% end %>
+                </div>
+            </div>
+        </div>
+    <% end %>
+
+    <% if @received_connections.present? %>
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Received Connections</h3>
+            </div>
+            <div class="card-body text-center">
+                <div class="row">
+                    <% @received_connections.each do |connection| %>                    
+                        <div class="col-lg-3 ">
+                            <div class="card mt-3" style="min-height:370px">
+                                <div class="card-body">
+                                    <%= image_tag  'dummy', class:"img-fluid mb-1 "%>
+                                    <div style="min-height:100px;">
+                                        <%= link_to member_path(connection.received), style: "text-decoration:none;" do %>
+                                            <p class="lead fw-bold"><%= connection.received.fullname%></p>
+                                            <small class="text-muted"><%= connection.received.profile_title%></small>
+                                        <% end %>
+                                    </div>
+
+                                    <div id="connection-status-<%= connection.id %>">
+                                        <% if ["accepted","rejected"].include?(connection.status)%>
+                                            <%= render 'connections/update', connection: connection %>
+                                        <% else %>
+                                            <%= link_to "Accept", connection_path(connection), class: "btn btn-success mt-2", data: {controller: "update-connection-status", turbo_method: :patch}%>
+                                            <%= link_to "Reject", connection_path(connection), class: "btn btn-danger mt-2", data: {controller: "update-connection-status", turbo_method: :patch}%>
+                                        <% end %>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <% end %>
+                </div>
+            </div>
+        </div>
+    <% end %>
+</div>

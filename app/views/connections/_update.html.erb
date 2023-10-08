@@ -1,0 +1,9 @@
+<div class="d-grid">
+    <%if connection.status == "accepted" %>
+        <%= link_to connection.status.titleize, "javascript:void(0)", class: connection.status_btn%>
+    <% elsif connection.status == "rejected" %>
+        <%= link_to connection.status.titleize, "javascript:void(0)", class: connection.status_btn%>
+    <% else %>
+        <%= link_to connection.status.titleize, "javascript:void(0)", class: connection.status_btn%>
+    <% end %>
+</div>

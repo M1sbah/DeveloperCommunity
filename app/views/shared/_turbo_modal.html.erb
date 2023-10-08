@@ -1,0 +1,13 @@
+<%= turbo_frame_tag :remote_modal ,  target: :_top do  %>
+	<div class="modal fade" id="bsturboModal" tabindex="-1" aria-labelledby="bsturboModalLabel" aria-hidden="true" data-controller="bs-modal">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="bsturboModalLabel"><%= modal_title %></h5>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+            <%= render form_partial %>
+	    </div>
+	  </div>
+	</div>
+<% end %>

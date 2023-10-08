@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  started_at: 2023-09-25
+  activity: one
+
+two:
+  name: MyString
+  started_at: 2023-09-25
+  activity: two

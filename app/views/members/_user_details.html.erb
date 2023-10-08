@@ -1,0 +1,48 @@
+<div class="card mb-5" id="user-details">
+    <div class="d-flex justify-content-end mx-3 pt-2">
+        <% if user == current_user %>
+            <%= link_to edit_user_details_path(user),data: {controller: "bs-modal-form"} do  %>
+                <i class="bi bi-pencil-fill"></i>
+            <% end %>
+        <% end %>
+    </div>
+    <div class="row">
+        <div class="col-lg-2">
+            <%= image_tag 'dummy',class:"img-fluid" %>
+        </div>
+        <div class="col-lg-10">
+            <div class="card-body">
+                <h3 class="fw-bold"><%= user.fullname %></h3>
+                <p class="lead"><%= user.profile_title %></p>
+                <p class="lead text-primary"><%= user.address%></p>
+
+                <div id="user-connection-status">
+                    <% if current_user.check_if_already_connected?(user) %>
+                        <%= link_to "Connect", connections_path, class: "btn btn-primary", data: {controller: "connections", turbo_method: :post, connections_target: "connection", requester_id: current_user.id, connected_id: user.id} %>
+                    <% elsif get_connection_status(user) == "pending" %>
+                        <%= render 'connections/create', connector: user %>
+
+                    <% elsif get_connection_status(user) == "accepted" %>
+                        <button type="button" class="btn btn-success">Connected</button>
+
+                    <% elsif get_connection_status(user) == "rejected" %>
+                        <button type="button" class="btn btn-danger">Rejected</button>
+                    <% end %>
+
+                </div>
+
+                <% if @connections.present? %>
+                    <div id="connection-count">
+                        <%= link_to pluralize(@connections.count, 'connection'), members_connections_path(user), class: "text-decoration-none" %>
+                    </div>
+                <% end %>
+                <% if current_user != user && @mutual_connections.present? && @muture_connections.count > 0 %>
+                    <div id="muture connection-count">
+                            <%= link_to pluralize(@muture_connections.count, 'muture connection'), members_connections_path(user, mutual_connections: true), class: "text-decoration-none" %>
+                        </div>
+                <% end %>
+
+            </div>
+        </div>
+    </div>
+</div>
